@@ -7,7 +7,7 @@ resource "google_service_account" "kubernetes" {
 resource "google_container_node_pool" "main" {
   name       = "main"
   cluster    = google_container_cluster.primary.id
-  node_count = 3
+  node_count = 1
 
   management {
     auto_repair  = true
@@ -16,7 +16,7 @@ resource "google_container_node_pool" "main" {
 
   autoscaling {
     min_node_count = 1
-    max_node_count = 3
+    max_node_count = 2
   }
 
   node_config {
