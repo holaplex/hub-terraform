@@ -15,13 +15,13 @@ resource "google_container_node_pool" "main" {
   }
 
   autoscaling {
-    min_node_count = 3
-    max_node_count = 6
+    min_node_count = 1
+    max_node_count = 3
   }
 
   node_config {
     preemptible  = false
-    machine_type = "n2-standard-2"
+    machine_type = "n2-standard-4"
     disk_size_gb = 250
     disk_type    = "pd-ssd"
 

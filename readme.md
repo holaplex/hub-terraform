@@ -27,6 +27,14 @@ use this backend unless the backend configuration changes
 
 ### Deploy
 
+Run terraform plan and validate the output.
+
+```bash
+terraform plan
+```
+
+Deploy when ready:
+
 ```bash
 terraform apply
 ```
@@ -38,4 +46,19 @@ All state changes will be saved in bucket `prod-holaplex-hub-tf-state`, so we ca
 
 ```bash
 terraform destroy
+```
+
+### Connect to the deployed cluster
+
+```bash
+gcloud auth login
+gcloud config set project prod-holaplex-hub
+gcloud components install gke-gcloud-auth-plugin
+gcloud container clusters get-credentials prod-holaplex-usc-gke --region us-central1 --project prod-holaplex-hub
+```
+
+### Validate
+
+```bash
+kubectl get nodes --context gke_prod-holaplex-hub_us-central1_prod-holaplex-usc-gke
 ```
