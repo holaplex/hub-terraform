@@ -26,3 +26,16 @@ use this backend unless the backend configuration changes
 ```
 
 ### Deploy
+
+```bash
+terraform apply
+```
+
+Deploy takes around 10-15 minutes.
+All state changes will be saved in bucket `prod-holaplex-hub-tf-state`, so we can make modifications from different environments (local, github actions)
+
+### Destroy
+
+```bash
+terraform destroy
+```
