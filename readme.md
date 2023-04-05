@@ -84,3 +84,11 @@ sed -i.bak 's/gke_prod-holaplex-hub_us-central1_//g' $KUBECONFIG
 ```bash
 kubectl get nodes --context prod-holaplex-usc-gke
 ```
+
+### Get DB users/passwords
+
+DB Passwords are auto-generated, you can retrieve them from the TF state.
+
+```bash
+gsutil cat gs://prod-holaplex-hub-tf-state/terraform/state/default.tfstate | jq '[.resources[].instances[].attributes | {instance: .instance, username: .name, password: .password } | select(.password != null)]'
+```
