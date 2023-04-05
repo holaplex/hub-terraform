@@ -90,5 +90,6 @@ kubectl get nodes --context prod-holaplex-usc-gke
 DB Passwords are auto-generated, you can retrieve them from the TF state.
 
 ```bash
-gsutil cat gs://prod-holaplex-hub-tf-state/terraform/state/default.tfstate | jq '[.resources[].instances[].attributes | {instance: .instance, username: .name, password: .password } | select(.password != null)]'
+gsutil cat gs://prod-holaplex-hub-tf-state/terraform/state/default.tfstate \
+  | jq '[.resources[].instances[].attributes | {instance: .instance, username: .name, password: .password } | select(.password != null)]'
 ```
