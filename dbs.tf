@@ -53,10 +53,14 @@ resource "google_sql_user" "users" {
   }
   name     = each.value.username
   instance = each.value.name
-  password = random_password.password.result
+  password = random_password.password[each.key].result
 }
 
 resource "random_password" "password" {
+  for_each = {
+    for index, instance in local.values.sqlInstances :
+    instance.name => instance
+  }
   length           = 16
   special          = true
   override_special = "!#$%&*()-_=+[]{}<>:?"
