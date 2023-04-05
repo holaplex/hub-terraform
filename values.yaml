@@ -1,0 +1,66 @@
+project:
+  name: prod-holaplex-hub
+kubernetes:
+  name: prod-holaplex-usc-gke
+  environment: production
+  nodePool:
+    name: main
+    machineType: n2-standard-4
+    diskSizeGb: 250
+    #Node count per AZ (x3).
+    nodeCount: 1
+    autoscaling: 
+      min: 1
+      max: 3
+nat:
+  name: nat
+vpc:
+  name: main
+  routing: REGIONAL
+  region: us-central1
+sqlInstances:
+  - name: hub-orgs
+    database: orgs
+    username: orgs
+    machineType: "db-custom-1-3840" # 1 CPU - 3840 RAM
+    diskSizeGb: 20
+  - name: hub-customers
+    database: customers
+    username: customers
+    machineType: "db-custom-1-3840"
+    diskSizeGb: 20
+  - name: hub-nfts
+    database: nfts
+    username: nfts
+    machineType: "db-custom-1-3840"
+    diskSizeGb: 20
+  - name: hub-webhooks
+    database: webhooks
+    username: webhooks
+    machineType: "db-custom-1-3840"
+    diskSizeGb: 20
+  - name: hub-treasuries
+    database: treasuries
+    username: treasuries
+    machineType: "db-custom-1-3840"
+    diskSizeGb: 20
+  - name: hydra
+    database: hydra
+    username: hydra
+    machineType: "db-custom-1-3840"
+    diskSizeGb: 20
+  - name: keto
+    database: keto
+    username: keto
+    machineType: "db-custom-1-3840"
+    diskSizeGb: 20
+  - name: kratos
+    database: kratos
+    username: kratos
+    machineType: "db-custom-1-3840"
+    diskSizeGb: 20
+  - name: svix
+    database: svix
+    username: svix
+    machineType: "db-custom-1-3840"
+    diskSizeGb: 20

@@ -1,7 +1,7 @@
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/container_cluster
 resource "google_container_cluster" "primary" {
-  name                     = "prod-holaplex-usc-gke"
-  location                 = "us-central1"
+  name                     = local.values.kubernetes.name
+  location                 = local.values.vpc.region
   remove_default_node_pool = true
   initial_node_count       = 1
   network                  = google_compute_network.main.self_link
@@ -24,7 +24,7 @@ resource "google_container_cluster" "primary" {
   }
 
   workload_identity_config {
-    workload_pool = "prod-holaplex-hub.svc.id.goog"
+    workload_pool = "${local.values.project.name}.svc.id.goog"
   }
 
   ip_allocation_policy {
@@ -39,3 +39,4 @@ resource "google_container_cluster" "primary" {
   }
 
 }
+

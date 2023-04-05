@@ -51,6 +51,8 @@ use this backend unless the backend configuration changes
 
 ### Deploy
 
+Open `values.yaml` and modify it to suit your needs. If need to upgrade SQL instance size or add more, just modify the sqlInstances array. Save and exit.
+
 Run terraform plan and validate the output.
 
 ```bash

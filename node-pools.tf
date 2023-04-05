@@ -5,9 +5,9 @@ resource "google_service_account" "kubernetes" {
 
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/container_node_pool
 resource "google_container_node_pool" "main" {
-  name       = "main"
+  name       = local.values.kubernetes.nodePool.name
   cluster    = google_container_cluster.primary.id
-  node_count = 1
+  node_count = local.values.kubernetes.nodePool.nodeCount
 
   management {
     auto_repair  = true
@@ -15,18 +15,18 @@ resource "google_container_node_pool" "main" {
   }
 
   autoscaling {
-    min_node_count = 1
-    max_node_count = 2
+    min_node_count = local.values.kubernetes.nodePool.autoscaling.min
+    max_node_count = local.values.kubernetes.nodePool.autoscaling.max
   }
 
   node_config {
     preemptible  = false
-    machine_type = "n2-standard-4"
-    disk_size_gb = 250
+    machine_type = local.values.kubernetes.nodePool.machineType
+    disk_size_gb = local.values.kubernetes.nodePool.diskSizeGb
     disk_type    = "pd-ssd"
 
     labels = {
-      environment = "production"
+      environment = local.values.kubernetes.environment
     }
 
     service_account = google_service_account.kubernetes.email
@@ -35,3 +35,4 @@ resource "google_container_node_pool" "main" {
     ]
   }
 }
+
