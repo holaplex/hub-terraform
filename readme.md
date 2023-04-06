@@ -22,7 +22,19 @@ gcloud services enable compute.googleapis.com
 gcloud services enable servicenetworking.googleapis.com
 ```
 
-### Prepare workspace
+### Preparing our workspace
+
+Create a cloud bucket to store our terraform state.
+
+```bash
+bucket_name=name-of-tf-state-bucket
+gcloud storage buckets create gs://$bucket_name \
+ --default-storage-class=STANDARD \
+ --location=us \
+ --uniform-bucket-level-access
+ #enable versioning && apply lifecycle rules
+ gcloud storage buckets update gs://$bucket_name --versioning --lifecycle-file=bucket-lifecycle.json
+```
 
 Auth Terraform to GCP
 
@@ -66,6 +78,7 @@ terraform apply
 ```
 
 Deploy takes around 10-15 minutes.
+
 All state changes will be saved in bucket `prod-holaplex-hub-tf-state`, so we can make modifications from different environments (local, github actions)
 
 ### Connect to the deployed cluster
