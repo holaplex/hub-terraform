@@ -1,5 +1,6 @@
 project:
   name: prod-holaplex-hub
+  domain: holaplex.com
 vpc:
   name: main
   routing: REGIONAL

@@ -1,4 +1,4 @@
-# Local Dependencies
+### Local Dependencies
 
 - [gcloud CLI](https://cloud.google.com/sdk/docs/install)
 - [terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-terraform)
@@ -20,6 +20,11 @@ gcloud  services enable sqladmin.googleapis.com
 gcloud services enable compute.googleapis.com
 # enable Service Networking API
 gcloud services enable servicenetworking.googleapis.com
+# enable Secrets Manager API
+gcloud services enable secretmanager.googleapis.com
+# enable Certificate Manager API
+gcloud services enable certificatemanager.googleapis.com
+
 ```
 
 ### Preparing our workspace
@@ -81,6 +86,21 @@ Deploy takes around 10-15 minutes.
 
 All state changes will be saved in bucket `prod-holaplex-hub-tf-state`, so we can make modifications from different environments (local, github actions)
 
+### Configure DNS
+
+After completion, you should see a DNS challenge that you'll need to configure on your DNS provider in order to generate a wildcard certificate for the Hub domains.
+Ex:
+
+```
+Outputs:
+dns_record_name = "_acme-challenge.holaplex.com."
+dns_cname_value = "eb6fc218-9aeq-4c5e-8fe8-80737afa31oa.19.authorize.certificatemanager.goog."
+```
+
+Add a CNAME record with those values before continuing.
+
+> If using Google DNS, remove the domain and ending dot from the dns_record_value, so instead of `_acme-challenge.holaplex.com.` you'll add `_acme-challenge`
+
 ### Connect to the deployed cluster
 
 ```bash
@@ -98,11 +118,26 @@ sed -i.bak 's/gke_prod-holaplex-hub_us-central1_//g' $KUBECONFIG
 kubectl get nodes --context prod-holaplex-usc-gke
 ```
 
-### Get DB users/passwords
+### Save SQL instance users/passwords in Google secret Manager
 
-DB Passwords are auto-generated, you can retrieve them from the TF state.
+Open `./create-secrets.sh`, change the bucket name with your own and execute it to create a secret for each SQL instance you created.
 
 ```bash
-gsutil cat gs://prod-holaplex-hub-tf-state/terraform/state/default.tfstate \
-  | jq '[.resources[].instances[].attributes | {instance: .instance, username: .name, password: .password } | select(.password != null)]'
+IFS=$'\n'
+credentials=$(gsutil cat gs://$bucket_name/terraform/state/default.tfstate \
+  | jq -r '.resources[].instances[].attributes | {instance: .instance, username: .name, password: .password } | select(.password != null) | [.instance, .username, .password] | @tsv')
+for line in $credentials; do
+  IFS=$'\t' read -ra values <<< "$line"
+  instance="${values[0]}"
+  username="${values[1]}"
+  password="${values[2]}"
+
+  echo -ne "$password" | gcloud secrets create "$instance-db-creds" --data-file=- --labels=user="$username"
+  IFS=$'\n'
+done
 ```
+
+You should see a secret for each instance in [Secret Manager](https://console.cloud.google.com/security/secret-manager)
+
+Initial setup is complete.  
+Head over to [hub-kubes/external-secrets](https://github.com/holaplex/hub-kubes/blob/main/infra/external-secrets) to continue.
