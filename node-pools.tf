@@ -29,6 +29,8 @@ resource "google_container_node_pool" "main" {
       environment = local.values.kubernetes.environment
     }
 
+    tags = ["${local.values.kubernetes.name}-node"]
+
     service_account = google_service_account.kubernetes.email
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform"
