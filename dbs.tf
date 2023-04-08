@@ -61,8 +61,7 @@ resource "random_password" "password" {
     for index, instance in local.values.sqlInstances :
     instance.name => instance
   }
-  length           = 16
-  special          = true
-  override_special = "!#$%&*()-_=+[]{}<>:?"
+  length  = 30
+  special = false
 }
 
