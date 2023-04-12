@@ -141,7 +141,8 @@ You should see a secret for each instance in [Secret Manager](https://console.cl
 
 ### Deploy automated backups
 
-Replace the values below with your own (set in `values.yaml`)
+- Install [Velero CLI](https://github.com/vmware-tanzu/velero/releases/tag/v1.10.2)
+- Replace the values below with your own (set in `values.yaml`)
 
 ```bash
 #kubernetes.backups.service.namespace
@@ -153,9 +154,9 @@ GSA_NAME=velero
 PROJECT_ID=prod-holaplex-hub
 #kubernetes.backups.bucket.name
 BUCKET=prod-holaplex-usc-gke-velero
-
+#Create namespace
 kubectl create namespace $NAMESPACE
-
+#Deploy
 velero install \
   --namespace $NAMESPACE \
   --provider gcp \
@@ -165,6 +166,12 @@ velero install \
   --sa-annotations iam.gke.io/gcp-service-account=$GSA_NAME@$PROJECT_ID.iam.gserviceaccount.com \
   --backup-location-config serviceAccount=$GSA_NAME@$PROJECT_ID.iam.gserviceaccount.com \
   --wait
+```
+
+Setup a backup schedule:
+
+```bash
+velero schedule create daily-backups --schedule="0 3 * * *"
 ```
 
 Initial setup is complete.
