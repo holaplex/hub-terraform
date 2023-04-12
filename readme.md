@@ -139,5 +139,32 @@ done
 
 You should see a secret for each instance in [Secret Manager](https://console.cloud.google.com/security/secret-manager)
 
-Initial setup is complete.  
-Head over to [hub-kubes/external-secrets](https://github.com/holaplex/hub-kubes/blob/main/infra/external-secrets) to continue.
+### Deploy automated backups
+
+Replace the values below with your own (set in `values.yaml`)
+
+```bash
+#kubernetes.backups.service.namespace
+NAMESPACE=velero
+#kubernetes.backups.service.name
+KSA_NAME=velero
+GSA_NAME=velero
+#project.name
+PROJECT_ID=prod-holaplex-hub
+#kubernetes.backups.bucket.name
+BUCKET=prod-holaplex-usc-gke-velero
+
+kubectl create namespace $NAMESPACE
+
+velero install \
+  --namespace $NAMESPACE \
+  --provider gcp \
+  --plugins velero/velero-plugin-for-gcp:v1.6.0 \
+  --bucket $BUCKET \
+  --no-secret \
+  --sa-annotations iam.gke.io/gcp-service-account=$GSA_NAME@$PROJECT_ID.iam.gserviceaccount.com \
+  --backup-location-config serviceAccount=$GSA_NAME@$PROJECT_ID.iam.gserviceaccount.com \
+  --wait
+```
+
+Initial setup is complete.

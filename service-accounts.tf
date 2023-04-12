@@ -3,7 +3,9 @@
 
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_service_account
 resource "google_service_account" "velero" {
-  account_id = "velero"
+  account_id   = local.values.kubernetes.backups.service.name
+  display_name = local.values.kubernetes.backups.service.name
+  project      = local.values.project.name
 }
 
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_iam

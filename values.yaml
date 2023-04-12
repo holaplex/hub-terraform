@@ -1,18 +1,23 @@
 project:
   name: prod-holaplex-hub
   domain: holaplex.com
+
 vpc:
   name: main
   routing: REGIONAL
   region: us-central1
+
 nat:
   name: nat
+
 router:
   name: router
+
 subnetwork:
   name: private
   privateIpGoogleAccess: true
   cidrRange: "10.0.0.0/18"
+
 kubernetes:
   name: prod-holaplex-usc-gke
   environment: production
@@ -28,49 +33,58 @@ kubernetes:
   networkRanges:
     pods: "10.48.0.0/14"
     services: "10.52.0.0/20"
+  backups:
+    service:
+      name: velero
+      namespace: velero
+    bucket:
+      name: prod-holaplex-usc-gke-velero
+      location: us
+      storageClass: MULTI_REGIONAL
+
 sqlInstances:
   - name: hub-orgs
     database: orgs
     username: orgs
-    machineType: "db-custom-1-3840" # 1 CPU - 3840 RAM
+    machineType: db-custom-1-3840 # 1 CPU - 3840 RAM
     diskSizeGb: 20
   - name: hub-customers
     database: customers
     username: customers
-    machineType: "db-custom-1-3840"
+    machineType: db-custom-1-3840
     diskSizeGb: 20
   - name: hub-nfts
     database: nfts
     username: nfts
-    machineType: "db-custom-1-3840"
+    machineType: db-custom-1-3840
     diskSizeGb: 20
   - name: hub-webhooks
     database: webhooks
     username: webhooks
-    machineType: "db-custom-1-3840"
+    machineType: db-custom-1-3840
     diskSizeGb: 20
   - name: hub-treasuries
     database: treasuries
     username: treasuries
-    machineType: "db-custom-1-3840"
+    machineType: db-custom-1-3840
     diskSizeGb: 20
   - name: hydra
     database: hydra
     username: hydra
-    machineType: "db-custom-1-3840"
+    machineType: db-custom-1-3840
     diskSizeGb: 20
   - name: keto
     database: keto
     username: keto
-    machineType: "db-custom-1-3840"
+    machineType: db-custom-1-3840
     diskSizeGb: 20
   - name: kratos
     database: kratos
     username: kratos
-    machineType: "db-custom-1-3840"
+    machineType: db-custom-1-3840
     diskSizeGb: 20
   - name: svix
     database: svix
     username: svix
-    machineType: "db-custom-1-3840"
+    machineType: db-custom-1-3840
     diskSizeGb: 20
