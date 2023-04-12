@@ -5,7 +5,7 @@ resource "google_compute_firewall" "allow_admission_webhooks" {
 
   allow {
     protocol = "tcp"
-    ports    = ["9443"]
+    ports    = ["9443", "8443", "443"]
   }
 
   source_ranges = [google_container_cluster.primary.private_cluster_config[0].master_ipv4_cidr_block]
