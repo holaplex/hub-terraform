@@ -175,3 +175,7 @@ velero schedule create daily-backups --schedule="0 3 * * *"
 ```
 
 Initial setup is complete.
+If going to prod, continue with:
+[Deploying a Fireblocks Co-signer VM in Azure](./co-signer)
+
+If not, head over to [hub-kubes/external-secrets](https://github.com/holaplex/hub-kubes/blob/main/infra/external-secrets) to continue deploying.
