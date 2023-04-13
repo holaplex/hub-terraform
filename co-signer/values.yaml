@@ -1,0 +1,103 @@
+resourceGroup:
+  name: devops
+  location: EastUS
+
+virtualNetwork:
+  name: vnet
+subnet:
+  name: subnet
+
+virtualMachine:
+  name: fireblocks-co-signer
+  hostname: co-signer
+  adminUsername: holaplex
+  #Supported sizes are 'Standard_DC4s_v2' and 'Standard_DC4s_v3'
+  type: Standard_DC4s_v2
+  diskSizeGb: 256
+  image:
+    #Only Ubuntu 20.04 and 18.04 is supported.
+    sku: "20_04-lts-gen2"
+    version: "20.04.202303280"
+  ssh_public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDmSRExWfIt4kePYZ/MVBoE8OOo9qdF7VRNkU5ODjoG3QQeoH/lp+Gom9y5WwOMeVI0cSTco8ZKbSLesaUsNgGrvbupfdw93rGnYjUqyJkm6KOtiT6Z1Bq3fdRmoo8oZcWIwv8XTAtso1YBwzJtBcNSbSFsc4guNnRwHRrsGv0SP+uXbW+eHPu/xKeJ6j5CHCnnaA7i18zVvqekuPOZ2PFabr0Ft2Dvhm8SLJFDbDJM3ZHukGNmwSKZl0L8XeY+Cc5tpGIL3L8xvQxg17BREtwCXRzbdLZU+QGoNZeN7QWyQ/r+Ea7ESMOO+YJJ/U59QN4G8Y7cOTrenQPLCqT9emjOk2XqXLalkhA7X4IohMVcXNTHcGF6TQxiteNpa+b8Zg0P+Fo/lzGy1YmON3lNAEYKqXHSFx1cA5eCBq2/umLr8MrczWO4w8ROo69V+UkGiV1XCohzXbhR+F7uf26KoL6dQsjP54VxFSwtWiYLySIjej2Hh6aEivEr+TxNLA6UAgkNv7WhneYOerxrVA40KClFLfHNtworI/ixMjAATpiiOL330L/yG6ogzQ911kMwps5zLIBRJ7DIqrVnNPQbR8X6jw+S/MR+z+QQ6mqmE76OLTcHT+nR0JfazTP9gcAFvYKwpjut2hE26trB2bBLPzvAOMQw7KFxussd+m72NfBAEw== mariano@kyleholaplex.onmicrosoft.com"
+
+loadBalancer:
+  name: co-signer-lb
+  backend:
+    addressPool:
+      name: myBackendAddressPool
+
+securityGroup:
+  name: co-signer-sg
+  rules:
+    inbounds:
+      - ports: ["22"]
+        #Your own public IP to access via SSH and run setup (Remove after completing setup)
+        ip_address: 181.229.6.188
+        description: "Deployer IP"
+    outbounds:
+      - ports: ["80", "443"]
+        ip_address: 52.84.83.79
+        description: download.docker.com
+      - ports: ["80", "443"]
+        ip_address: 52.84.83.27
+        description: download.docker.com
+      - ports: ["80", "443"]
+        ip_address: 52.84.83.46
+        description: download.docker.com
+      - ports: ["80", "443"]
+        ip_address: 52.84.83.65
+        description: download.docker.com
+      - ports: ["80", "443"]
+        ip_address: 151.101.0.175
+        description: bootstrap.pypa.io
+      - ports: ["80", "443"]
+        ip_address: 151.101.64.175
+        description: bootstrap.pypa.io
+      - ports: ["80", "443"]
+        ip_address: 151.101.128.175
+        description: bootstrap.pypa.io
+      - ports: ["80", "443"]
+        ip_address: 151.101.192.175
+        description: bootstrap.pypa.io
+      - ports: ["80", "443"]
+        ip_address: 191.233.16.186
+        description: azure.archive.ubuntu.com
+      - ports: ["80", "443", "5000"]
+        ip_address: 35.227.35.254
+        description: registry.gitlab.com
+      - ports: ["80", "443"]
+        ip_address: 23.196.19.201
+        description: download.01.org
+      - ports: ["80", "443"]
+        ip_address: 52.219.141.92
+        description: fb-certs.s3.amazonaws.com
+      - ports: ["80", "443"]
+        ip_address: 3.134.25.131
+        description: mobile-api.fireblocks.io
+      - ports: ["80", "443"]
+        ip_address: 52.216.145.227
+        description: fb-customers
+      - ports: ["80", "443"]
+        ip_address: 52.216.145.227
+        description: fb-customers.s3.amazonaws.com
+      - ports: ["80", "443"]
+        ip_address: 52.217.125.65
+        description: fb-customers.s3.amazonaws.com
+      - ports: ["80", "443"]
+        ip_address: 52.216.105.131
+        description: fb-customers.s3.amazonaws.com
+      - ports: ["80", "443"]
+        ip_address: 3.5.28.104
+        description: fb-customers.s3.amazonaws.com
+      - ports: ["80", "443"]
+        ip_address: 52.217.76.92
+        description: fb-customers.s3.amazonaws.com
+      - ports: ["80", "443"]
+        ip_address: 3.5.29.100
+        description: fb-customers.s3.amazonaws.com
+      - ports: ["80", "443"]
+        ip_address: 52.217.96.28
+        description: fb-customers.s3.amazonaws.com
+      - ports: ["80", "443"]
+        ip_address: 54.231.196.81
+        description: fb-customers.s3.amazonaws.com
