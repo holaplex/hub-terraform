@@ -32,6 +32,14 @@ resource "google_sql_database_instance" "instance" {
       query_insights_enabled = true
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      maintenance_version,
+      settings[0].version,
+    ]
+  }
+
 }
 
 resource "google_sql_database" "database" {
