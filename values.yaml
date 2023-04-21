@@ -41,11 +41,25 @@ kubernetes:
       name: prod-holaplex-usc-gke-velero
       location: us
       storageClass: MULTI_REGIONAL
+  logging:
+    service:
+      name: logging
+      namespace: monitoring 
+    bucket:
+      name: prod-holaplex-usc-gke-logs
+      location: us
+      storageClass: MULTI_REGIONAL
+
 
 sqlInstances:
   - name: hub-orgs
     database: orgs
     username: orgs
+    machineType: db-custom-1-3840 # 1 CPU - 3840 RAM
+    diskSizeGb: 20
+  - name: hub-credits
+    database: credits
+    username: credits
     machineType: db-custom-1-3840 # 1 CPU - 3840 RAM
     diskSizeGb: 20
   - name: hub-customers

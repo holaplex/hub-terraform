@@ -46,7 +46,7 @@ resource "google_storage_bucket" "velero" {
       type = "Delete"
     }
     condition {
-      age        = 365
+      age        = 60
       with_state = "ANY"
     }
   }
