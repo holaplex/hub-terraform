@@ -1,3 +1,18 @@
+#https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_iam_custom_role
+resource "google_project_iam_custom_role" "logging" {
+  role_id     = local.values.kubernetes.logging.service.name
+  title       = title(local.values.kubernetes.logging.service.name)
+  description = format("Role for %s", local.values.kubernetes.logging.service.name)
+
+  permissions = [
+    "iam.serviceAccounts.signBlob",
+    "storage.objects.create",
+    "storage.objects.delete",
+    "storage.objects.get",
+    "storage.objects.list"
+  ]
+}
+
 #https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/google_project_iam#google_project_iam_member
 resource "google_project_iam_member" "logging_custom_role" {
   project = local.values.project.name

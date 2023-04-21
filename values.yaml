@@ -44,7 +44,7 @@ kubernetes:
   logging:
     service:
       name: logging
-      namespace: monitoring 
+      namespace: logging
     bucket:
       name: prod-holaplex-usc-gke-logs
       location: us
