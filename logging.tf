@@ -6,10 +6,12 @@ resource "google_project_iam_custom_role" "logging" {
 
   permissions = [
     "iam.serviceAccounts.signBlob",
+    "iam.serviceAccounts.getAccessToken",
     "storage.objects.create",
     "storage.objects.delete",
     "storage.objects.get",
-    "storage.objects.list"
+    "storage.objects.list",
+    "storage.objects.getIamPolicy"
   ]
 }
 
@@ -23,7 +25,7 @@ resource "google_project_iam_member" "logging_custom_role" {
 resource "google_project_iam_member" "logs_workload_identity_user" {
   project = local.values.project.name
   role    = "roles/iam.workloadIdentityUser"
-  member  = "serviceAccount:${local.values.project.name}.svc.id.goog[${local.values.kubernetes.logging.service.name}/${local.values.kubernetes.logging.service.namespace}]"
+  member  = "serviceAccount:${local.values.project.name}.svc.id.goog[${local.values.kubernetes.logging.service.namespace}/loki]"
 }
 
 #https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket

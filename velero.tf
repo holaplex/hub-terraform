@@ -31,7 +31,7 @@ resource "google_project_iam_member" "velero_custom_role" {
 resource "google_project_iam_member" "workload_identity_user" {
   project = local.values.project.name
   role    = "roles/iam.workloadIdentityUser"
-  member  = "serviceAccount:${local.values.project.name}.svc.id.goog[${local.values.kubernetes.backups.service.name}/${local.values.kubernetes.backups.service.namespace}]"
+  member  = "serviceAccount:${local.values.project.name}.svc.id.goog[${local.values.kubernetes.backups.service.namespace}/${local.values.kubernetes.backups.service.name}]"
 }
 
 #https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket
