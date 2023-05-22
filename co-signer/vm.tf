@@ -6,7 +6,7 @@ resource "azurerm_virtual_machine" "vm" {
   vm_size               = local.values.virtualMachine.type
 
   storage_os_disk {
-    name              = "disk"
+    name              = "co-signer-disk"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Premium_LRS"
@@ -44,7 +44,7 @@ resource "azurerm_network_interface" "nic" {
   ip_configuration {
     name                          = "${local.values.virtualMachine.name}-ip-config"
     subnet_id                     = azurerm_subnet.subnet.id
-    private_ip_address_allocation = "Static"
+    private_ip_address_allocation = "Dynamic"
   }
 }
 

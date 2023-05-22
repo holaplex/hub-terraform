@@ -24,5 +24,5 @@ az provider register --namespace Microsoft.Storage
 
 ```bash
 terraform plan
-terraform deploy
+terraform apply
 ```

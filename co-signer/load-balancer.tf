@@ -24,6 +24,12 @@ resource "azurerm_lb_backend_address_pool" "bap" {
   loadbalancer_id = azurerm_lb.lb.id
 }
 
+resource "azurerm_network_interface_backend_address_pool_association" "bap_vm_association" {
+  ip_configuration_name   = "${local.values.virtualMachine.name}-ip-config"
+  network_interface_id    = azurerm_network_interface.nic.id
+  backend_address_pool_id = azurerm_lb_backend_address_pool.bap.id
+}
+
 #https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/lb_rule
 resource "azurerm_lb_rule" "ssh_rule" {
   name                           = "ssh-rule"

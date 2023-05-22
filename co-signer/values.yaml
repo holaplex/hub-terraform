@@ -24,7 +24,7 @@ loadBalancer:
   name: co-signer-lb
   backend:
     addressPool:
-      name: myBackendAddressPool
+      name: vm-address-pool
 
 securityGroup:
   name: co-signer-sg
@@ -32,7 +32,7 @@ securityGroup:
     inbounds:
       - ports: ["22"]
         #Your own public IP to access via SSH and run setup (Remove after completing setup)
-        ip_address: 181.229.6.188
+        ip_address: 190.174.30.104
         description: "Deployer IP"
     outbounds:
       - ports: ["80", "443"]
@@ -72,9 +72,6 @@ securityGroup:
         ip_address: 52.219.141.92
         description: fb-certs.s3.amazonaws.com
       - ports: ["80", "443"]
-        ip_address: 3.134.25.131
-        description: mobile-api.fireblocks.io
-      - ports: ["80", "443"]
         ip_address: 52.216.145.227
         description: fb-customers
       - ports: ["80", "443"]
@@ -101,3 +98,15 @@ securityGroup:
       - ports: ["80", "443"]
         ip_address: 54.231.196.81
         description: fb-customers.s3.amazonaws.com
+      - ports: ["80", "443"]
+        ip_address: 3.134.25.131
+        description: mobile-api.fireblocks.io
+      - ports: ["80", "443"]
+        ip_address: 162.159.140.52
+        description: mobile-api.fireblocks.io
+      - ports: ["80", "443"]
+        ip_address: 172.66.0.52
+        description: mobile-api.fireblocks.io
+      - ports: ["80", "443"]
+        ip_address: 3.133.194.13
+        description: mobile-api.fireblocks.io
