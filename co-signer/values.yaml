@@ -30,10 +30,10 @@ securityGroup:
   name: co-signer-sg
   rules:
     inbounds:
-      - ports: ["22"]
-        #Your own public IP to access via SSH and run setup (Remove after completing setup)
-        ip_address: 190.174.30.104
-        description: "Deployer IP"
+    # Replace ip_address with your own public IP to access via SSH. Remove after completing setup
+    # - ports: ["22"]
+    #   ip_address: 190.174.27.108
+    #   description: "Deployer IP"
     outbounds:
       - ports: ["80", "443"]
         ip_address: 52.84.83.79

@@ -36,7 +36,6 @@ resource "google_sql_database_instance" "instance" {
   lifecycle {
     ignore_changes = [
       maintenance_version,
-      settings[0].version,
     ]
   }
 
@@ -72,4 +71,3 @@ resource "random_password" "password" {
   length  = 30
   special = false
 }
-

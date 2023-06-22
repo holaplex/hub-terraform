@@ -40,10 +40,8 @@ resource "google_container_cluster" "primary" {
 
   lifecycle {
     ignore_changes = [
-      master_version,
       node_version,
     ]
   }
 
 }
-
