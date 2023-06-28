@@ -12,10 +12,13 @@ resource "google_container_cluster" "primary" {
 
   addons_config {
     http_load_balancing {
-      disabled = true
+      disabled = !local.values.kubernetes.loadBalancer.enabled
     }
     horizontal_pod_autoscaling {
-      disabled = false
+      disabled = !local.values.kubernetes.nodePool.autoscaling.enabled
+    }
+    network_policy_config {
+      disabled = !local.values.kubernetes.networkPolicies.enabled
     }
   }
 
