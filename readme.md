@@ -53,6 +53,8 @@ Make sure the output of this command mentions the project you want to make chang
 Quota project "prod-holaplex-hub" was added to ADC.
 ```
 
+Last step is to update the `provider.tf` file to match the bucket name to store/read the terraform state.
+
 Initialize backend
 
 ```bash

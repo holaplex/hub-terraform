@@ -1,13 +1,13 @@
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs
 provider "google" {
-  project = "prod-holaplex-hub"
-  region  = "us-central1"
+  project = local.values.project.name
+  region  = local.values.vpc.region
 }
 
 # https://www.terraform.io/language/settings/backends/gcs
 terraform {
   backend "gcs" {
-    bucket = "prod-holaplex-hub-tf-state"
+    bucket = "stage-holaplex-hub-tf-state"
     prefix = "terraform/state"
   }
   required_providers {

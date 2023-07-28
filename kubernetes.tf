@@ -2,6 +2,7 @@
 resource "google_container_cluster" "primary" {
   name                     = local.values.kubernetes.name
   location                 = local.values.vpc.region
+  node_locations           = local.values.kubernetes.zones
   remove_default_node_pool = true
   initial_node_count       = 1
   network                  = google_compute_network.main.self_link
@@ -15,7 +16,7 @@ resource "google_container_cluster" "primary" {
       disabled = !local.values.kubernetes.loadBalancer.enabled
     }
     horizontal_pod_autoscaling {
-      disabled = !local.values.kubernetes.nodePool.autoscaling.enabled
+      disabled = !local.values.kubernetes.autoscaling.enabled
     }
     network_policy_config {
       disabled = !local.values.kubernetes.networkPolicies.enabled
