@@ -55,6 +55,10 @@ kubernetes:
       location: us
       storageClass: MULTI_REGIONAL
 
+redisInstances:
+  - name: hub-nfts
+    tier: STANDARD_HA
+    memorySizeGb: 4
 
 sqlInstances:
   - name: hub-orgs
@@ -65,7 +69,7 @@ sqlInstances:
   - name: hub-credits
     database: credits
     username: credits
-    machineType: db-custom-1-3840 # 1 CPU - 3840 RAM
+    machineType: db-custom-1-3840
     diskSizeGb: 20
   - name: hub-customers
     database: customers
