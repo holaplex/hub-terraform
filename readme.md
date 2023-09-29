@@ -24,7 +24,8 @@ gcloud services enable servicenetworking.googleapis.com
 gcloud services enable secretmanager.googleapis.com
 # enable Certificate Manager API
 gcloud services enable certificatemanager.googleapis.com
-
+# Enable redis - memory store API
+gcloud services enable redis.googleapis.com
 ```
 
 ### Preparing our workspace
