@@ -26,7 +26,7 @@ kubernetes:
     machineType: n2-standard-4
     diskSizeGb: 250
     #Node count per AZ (x3).
-    nodeCount: 1
+    nodeCount: 2
     autoscaling:
       enabled: true
       min: 1
