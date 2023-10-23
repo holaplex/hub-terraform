@@ -26,7 +26,11 @@ resource "google_redis_instance" "redis" {
       }
     }
   }
-
+  lifecycle {
+    ignore_changes = [
+      maintenance_schedule,
+    ]
+  }
 }
 
 output "redis_instance_ips" {
